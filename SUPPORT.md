@@ -124,7 +124,7 @@ Enable `chrome://flags/#enable-webrtc-pipewire-capturer`
 
 ### How can I log in inside a virtual machine?
 
-While it seems to work out of the box in some kvm/qemu/libvirt environments (f.e. Gnome Boxes), you need to enable 3D acceleration in VirtualBox.
+While it seems to work out of the box in some kvm/qemu/libvirt environments, you need to enable 3D acceleration at least in VirtualBox and Gnome Boxes.
 
 ### How can I use the amazing mps-youtube?
 
@@ -172,6 +172,32 @@ greetd, our login messenger, is not supported by the manjaro installer. refer [h
 
 ```bash
 pacman -R wlsunset
+```
+
+### How can I set a fixed geo location for the night-light feature?
+
+Update the waybar module by creating or updating your `~/.config/waybar/config.jsonc` with appropriate values for latitude and longitude:
+
+```jsonc
+{
+    "include": [
+        "/usr/share/sway/templates/waybar/config.jsonc"
+    ],
+    "custom/sunset": {
+        "interval": "once",
+        "tooltip": false,
+        "return-type": "json",
+        "format": "{icon}",
+        "format-icons": {
+            "on": "",
+            "off": ""
+        },
+        "exec": "latitude=50.1 longitude=8.7 /usr/share/sway/scripts/sunset.sh",
+        "on-click": "/usr/share/sway/scripts/sunset.sh toggle; pkill -RTMIN+6 waybar",
+        "exec-if": "/usr/share/sway/scripts/sunset.sh check",
+        "signal": 6
+    },
+}
 ```
 
 ### How can I disable the dynamic workspace icons?
